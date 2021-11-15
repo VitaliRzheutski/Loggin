@@ -1,10 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 const UserPage = (props) => {
-  const {handleClick} = props
-
+  const {handleClick, user} = props
+  console.log('props from up:',props)
+  if(!user.id){
+    return <Redirect to='/' />
+  }
   return (
+    
     <div className='h100 w100 flex column align-items-center justify-center'>
       <div className='flex'>
         <img className='rounded mr1' />
@@ -20,6 +25,7 @@ const UserPage = (props) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     // your code here
+    user: state.user
   }
 }
 
