@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 const UserPage = (props) => {
   const {handleClick, user} = props
-  console.log('props from up:',props)
+  console.log('props from userPage:',props)
   if(!user.id){
     return <Redirect to='/' />
   }
@@ -14,7 +14,9 @@ const UserPage = (props) => {
       <div className='flex'>
         <img className='rounded mr1' />
         <h1>Welcome back!</h1>
+        
       </div>
+      <p>{user.email}</p>
       <div>
         <button className='btn bg-red white p1 rounded' onClick={handleClick}>Logout</button>
       </div>

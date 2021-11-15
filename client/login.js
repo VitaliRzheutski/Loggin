@@ -1,8 +1,10 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { loginThunk } from './store'
 
-const Login = (props) => {
-  const {handleSubmit} = props
+ const Login = (props) => {
+  const { handleSubmit } = props
+  console.log('props from userPage:',props)
 
   return (
     <div className='h100 w100 flex column align-items-center justify-center'>
@@ -36,11 +38,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const history = ownProps.history
 
   return {
-    handleSubmit (evt) {
-      evt.preventDefault()
-      // your code here!
+    async handleSubmit(evt) {
+      try {
+        evt.preventDefault()
+        const email = evt.target.email.value;
+        const password = evt.target.password.value;
+        await dispatch(loginThunk({ email, password }));
+        ownProps.history.push("/home");
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
-
-export default connect(null, mapDispatchToProps)(Login)
+  export default connect(null, mapDispatchToProps)(Login)
