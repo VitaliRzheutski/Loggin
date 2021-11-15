@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { logOutThunk } from './store'
 
 const UserPage = (props) => {
   const {handleClick, user} = props
@@ -38,8 +39,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const history = ownProps.history
 
   return {
-    handleClick () {
+    async handleClick () {
       // your code here
+      try{
+        await dispatch(logOutThunk());
+        ownProps.history.push("/")
+      }catch(error){
+        console.log(error)
+      }
     }
   }
 }
