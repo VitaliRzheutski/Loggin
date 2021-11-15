@@ -12,8 +12,9 @@ router.put('/login', async (req, res, next) => {
                 password: req.params.password
             }
         })
-        console.log('USER:', user)
+        // console.log('USER:', user)
         if (user) {
+            req.session.userId = user.id
             res.json(user);
         } else {
             const err = new Error("Incorrect email or password!");
@@ -23,4 +24,21 @@ router.put('/login', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+const userNotFound = (next) => {
+    const err = new Error("Not found");
+    err.status = 404;
+    next(err);
+  };
+router.get('/me',async(req,res,next)=>{
+   try{
+    if(!req.session.userId){
+        userNotFound(next)
+    }else{
+        const user = await User.findByPk(req.session.userId);
+        user ? res.json(user) : userNotFound(next);
+    }
+   }catch(error){
+       next(error)
+   }
 })
