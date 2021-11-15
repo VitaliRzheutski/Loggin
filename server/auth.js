@@ -42,3 +42,13 @@ router.get('/me',async(req,res,next)=>{
        next(error)
    }
 })
+
+router.delete('/logout',(req,res,next)=>{
+    try{
+        // console.log('req.session:',req.session)
+        req.session.destroy();
+        res.status(204).end()
+    }catch(error){
+        next(error)
+    }
+})

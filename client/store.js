@@ -23,11 +23,21 @@ export const loginThunk = (formData)=>{
     }
   }
 }
+export const logOutThunk = () =>{
+  return async (dispatch)=>{
+    try{
+      await axios.delete('/auth/logout');
+      dispatch(gotUser(initialState.user))
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 export const getMeThunk = () =>{
   return async(dispatch)=>{
     try{
-      const response = axios.get('/auth/me');
-      dispatch(gotUser((await response).data))
+      const response = await axios.get('/auth/me');
+      dispatch(gotUser(response.data))
     }catch(error){
       console.log(error)
     }
