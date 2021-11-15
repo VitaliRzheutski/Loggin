@@ -5,15 +5,17 @@ import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-d
 import store from './store'
 import Login from './login'
 import UserPage from './user-page'
-
+import { getMeThunk } from './store'
 // We've taken a class component and wrapped it in
 // `withRouter` so that it receives `history` from react-router-dom
 // as a prop! We've kept it a class component because (as we'll see
 // in the workshop), we want to take advantage of that `componentDidMount`
 // lifecycle hook!
 const Main = withRouter(class extends Component {
-  componentDidMount () {
+  async componentDidMount () {
     // your code here
+    await store.dispatch(getMeThunk());
+    this.props.history.push('/home')
   }
 
   render () {
